@@ -1,0 +1,61 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=4
+
+_global_script_classes=[ {
+"base": "Reference",
+"class": "BlueDie",
+"language": "GDScript",
+"path": "res://Scripts/BlueDie.gd"
+}, {
+"base": "KinematicBody2D",
+"class": "Player",
+"language": "GDScript",
+"path": "res://Scripts/Player.gd"
+}, {
+"base": "Reference",
+"class": "RedDie",
+"language": "GDScript",
+"path": "res://Scripts/RedDie.gd"
+} ]
+_global_script_class_icons={
+"BlueDie": "",
+"Player": "",
+"RedDie": ""
+}
+
+[application]
+
+config/name="GMTK-Jam-2022"
+run/main_scene="res://Scenes/main.tscn"
+config/icon="res://icon.png"
+
+[display]
+
+window/size/width=512
+window/size/height=512
+window/size/test_width=900
+window/size/test_height=900
+window/stretch/mode="2d"
+window/stretch/aspect="keep"
+
+[global]
+
+window=false
+width=false
+window_width=false
+window_wi=0
+
+[physics]
+
+common/enable_pause_aware_picking=true
+
+[rendering]
+
+environment/default_environment="res://default_env.tres"
