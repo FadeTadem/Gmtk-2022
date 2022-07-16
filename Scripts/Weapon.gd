@@ -18,9 +18,12 @@ func _ready() -> void:
 func _physics_process(_delta) -> void:
 	var mousePos := get_global_mouse_position();
 	var direction :Vector2 = (mousePos - self.global_position).normalized();
-	self.rotation = direction.angle();
+	self.rotation = clamp(direction.angle(), -PI/2, +PI/5);
+	
 
+func _input(event):
+	if event.is_action_pressed("attack", false):
+		attack();
 
 func attack() -> void:
-	assert(false, "This function should be overriden in derived classes");
-	return;
+	$AnimationPlayer.play("Attack");
