@@ -24,16 +24,6 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Scripts/MeleeWeapon.gd"
 }, {
-"base": "Weapon",
-"class": "MeleeWeapon_Sword",
-"language": "GDScript",
-"path": "res://Scripts/MeleeWeapon_Sword.gd"
-}, {
-"base": "KinematicBody2D",
-"class": "Player",
-"language": "GDScript",
-"path": "res://Scripts/Player.gd"
-}, {
 "base": "Reference",
 "class": "PlayerStats",
 "language": "GDScript",
@@ -43,15 +33,19 @@ _global_script_classes=[ {
 "class": "Weapon",
 "language": "GDScript",
 "path": "res://Scripts/Weapon.gd"
+}, {
+"base": "KinematicBody2D",
+"class": "_m_playerNode",
+"language": "GDScript",
+"path": "res://Scripts/Player.gd"
 } ]
 _global_script_class_icons={
 "Die": "",
 "Hitbox": "",
 "MeleeWeapon_Dagger": "",
-"MeleeWeapon_Sword": "",
-"Player": "",
 "PlayerStats": "",
-"Weapon": ""
+"Weapon": "",
+"_m_playerNode": ""
 }
 
 [application]

@@ -1,18 +1,18 @@
 class_name PlayerStats
 
 # The horizontal speed with wich the player will accelerate when moving
-var moveSpeed :float; 
+var m_moveSpeed :float; 
 # The maximum speed the player is allowed to move at
-var maxSpeed :float;
+var m_maxSpeed :float;
 # The jump hight ( in pixels ) of the player
-var jumpHeight :float;
+var m_jumpHeight :float;
 # The weapon currently in hand
-var handledWeapon: PackedScene = null; # null = no weapon
+var m_handledWeapon: PackedScene = null; # null = no weapon
 
 
 
-func _init(timeToMaxSpeed:float, maxSpeed:float, jumpHeight:float, handledWeapon: PackedScene):
-	self.moveSpeed = maxSpeed / timeToMaxSpeed;
-	self.maxSpeed = maxSpeed;
-	self.jumpHeight = jumpHeight;
-	self.handledWeapon = handledWeapon;
+func _init(p_timeToMaxSpeed:float, p_maxSpeed:float, p_jumpHeight:float, p_handledWeapon: PackedScene):
+	self.m_moveSpeed = p_maxSpeed / p_timeToMaxSpeed;
+	self.m_maxSpeed = p_maxSpeed;
+	self.m_jumpHeight = p_jumpHeight;
+	self.m_handledWeapon = p_handledWeapon;

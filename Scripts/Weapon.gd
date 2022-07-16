@@ -8,11 +8,11 @@ This node requires that it is a direct child of a WeaponAttach node
 """
 
 
-onready var attachPoint := $AttachPoint
-onready var parent := get_parent() as Node2D;
+onready var _m_attachPoint := $AttachPoint
+onready var _m_parent := get_parent() as Node2D;
 
 func _ready() -> void: 
-	self.position = parent.position;
+	self.position = _m_parent.position;
 
 
 func _physics_process(_delta) -> void:
