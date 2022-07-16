@@ -2,13 +2,13 @@ extends KinematicBody2D
 class_name Player
 
 
-var gravity :float = 10;
+var gravity :float = 981;
 var coyoteTimeTimer :Timer;
 
 
 var dice: Array = [
 	Die.new([ # The blue die
-		PlayerStats.new(100, 300, 400, null),
+		PlayerStats.new(100, 300, 32 * 4, null),
 		PlayerStats.new(100, 300, 100, null),
 		PlayerStats.new(100, 300, 100, null),
 		PlayerStats.new(100, 300, 100, null),
@@ -38,7 +38,7 @@ func _ready():
 	coyoteTimeTimer.autostart = false;
 	get_tree().root.get_children()[0].call_deferred("add_child", coyoteTimeTimer);
 
-func _physics_process(_delta):
+func _physics_process(delta):
 	if Input.is_action_just_pressed("switch_die"):
 		_switchDie();
 	
@@ -49,14 +49,11 @@ func _physics_process(_delta):
 	else:
 		vel.x = 0;
 	
-	if coyoteTimeTimer.is_stopped():
-		vel.y += gravity;
-	
 	if is_on_floor() || !coyoteTimeTimer.is_stopped() || $BunnyHopRay.is_colliding():
 		jump_count = 0;
 		if Input.is_action_just_pressed("jump") && jump_count == 0 :
 			jump_count += 1;
-			vel.y = -stats.jumpHeight;
+			vel.y = -sqrt(2 * gravity * stats.jumpHeight);
 			coyoteTimeTimer.stop();
 
 	var was_on_floor = is_on_floor();
@@ -64,6 +61,8 @@ func _physics_process(_delta):
 	if not is_on_floor() and was_on_floor and jump_count == 0:
 		coyoteTimeTimer.start(0.2);
 		vel.y = 0;
+	
+	vel.y += gravity * delta;
 
 
 func _swtichFace() -> void:
