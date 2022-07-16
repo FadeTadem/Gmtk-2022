@@ -1,18 +1,29 @@
 extends KinematicBody2D
 class_name Player
 
-export(float) var gravity: float = 0
-export(float) var ms: float = 0
-export(float) var max_speed: float = 0
-export(float) var jh: float = 0 
+var gravity :float = 10;
+var stats :PlayerStats = PlayerStats.new(100, 300, 100, null);
 
-enum DieColor {
-	RED,
-	BLUE
-};
+var dice: Array = [
+	Die.new([ # The blue die
+		PlayerStats.new(100, 300, 100, null),
+		PlayerStats.new(100, 300, 100, null),
+		PlayerStats.new(100, 300, 100, null),
+		PlayerStats.new(100, 300, 100, null),
+		PlayerStats.new(100, 300, 100, null),
+		PlayerStats.new(100, 300, 100, null)]
+	), 
+	Die.new([ # The red die
+		PlayerStats.new(100, 300, 100, null),
+		PlayerStats.new(100, 300, 100, null),
+		PlayerStats.new(100, 300, 100, null),
+		PlayerStats.new(100, 300, 100, null),
+		PlayerStats.new(100, 300, 100, null),
+		PlayerStats.new(100, 300, 100, null)]
+	)
+];
 
 var vel:Vector2 = Vector2.ZERO;
-var current_color = DieColor.RED;
 
 func _physics_process(delta):
 	
@@ -25,18 +36,6 @@ func _physics_process(delta):
 	vel = move_and_slide_with_snap(vel, Vector2.ONE, Vector2.UP);
 
 
-func _getVelocity(oldVel:Vector2, dir:Vector2) -> Vector2:
-	var newVel := oldVel;
-	
-	newVel.x += dir.x * ms; 
-	newVel.x = clamp(newVel.x, -max_speed, max_speed);
-	if dir.y == 1: 
-		newVel.y -= jh;
-	else:
-		newVel.y += gravity; 
-	
-	return newVel;
-
 func _getInputDirection() -> Vector2:
 	var dir: Vector2 = Vector2.ZERO
 	
@@ -44,12 +43,21 @@ func _getInputDirection() -> Vector2:
 	dir.y = 1 if is_on_floor() && Input.is_action_just_pressed("jump") else 0;
 	return dir;
 
+
+
+func _getVelocity(oldVel:Vector2, dir:Vector2) -> Vector2:
+	var newVel := oldVel;
+	
+	newVel.x += dir.x * stats.moveSpeed; 
+	newVel.x = clamp(newVel.x, -stats.maxSpeed, stats.maxSpeed);
+	if dir.y == 1: 
+		newVel.y -= stats.jumpHeight;
+	else:
+		newVel.y += gravity; 
+	
+	return newVel;
+
+
 func _switchDie() -> void :
 	
-	if current_color == DieColor.RED:
-		current_color = DieColor.BLUE;
-		self.modulate = Color.aqua;
-	else:
-		current_color = DieColor.RED;
-		self.modulate = Color.crimson;	
 	pass

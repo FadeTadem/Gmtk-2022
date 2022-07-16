@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Scripts/Player.gd" type="Script" id=1]
 [ext_resource path="res://icon.png" type="Texture" id=2]
+[ext_resource path="res://Scenes/Weapon.tscn" type="PackedScene" id=3]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 16.0
@@ -9,6 +10,9 @@ height = 16.0
 
 [node name="Player" type="KinematicBody2D"]
 script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
 
 [node name="Icon" type="Sprite" parent="."]
 modulate = Color( 1, 0.113725, 0.113725, 1 )
@@ -19,3 +23,8 @@ texture = ExtResource( 2 )
 modulate = Color( 0.917647, 0.0196078, 0, 1 )
 self_modulate = Color( 0.972549, 0.0784314, 0.0784314, 1 )
 shape = SubResource( 1 )
+
+[node name="WeaponAttach" type="Position2D" parent="."]
+position = Vector2( 0, -8 )
+
+[node name="Weapon" parent="WeaponAttach" instance=ExtResource( 3 )]
