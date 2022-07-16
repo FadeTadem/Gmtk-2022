@@ -16,7 +16,7 @@ var current_color = DieColor.RED;
 
 func _physics_process(delta):
 	
-	if Input.is_action_just_pressed("ui_accept"):
+	if Input.is_action_just_pressed("switch_die"):
 		_switchDie();
 	
 	var dir: Vector2 = _getInputDirection();
@@ -40,8 +40,8 @@ func _getVelocity(oldVel:Vector2, dir:Vector2) -> Vector2:
 func _getInputDirection() -> Vector2:
 	var dir: Vector2 = Vector2.ZERO
 	
-	dir.x = Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left");
-	dir.y = 1 if is_on_floor() && Input.is_action_just_pressed("ui_up") else 0;
+	dir.x = Input.get_action_strength("move_right") - Input.get_action_strength("move_left");
+	dir.y = 1 if is_on_floor() && Input.is_action_just_pressed("jump") else 0;
 	return dir;
 
 func _switchDie() -> void :
