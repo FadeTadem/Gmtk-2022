@@ -10,9 +10,9 @@ config_version=4
 
 _global_script_classes=[ {
 "base": "Reference",
-"class": "BlueDie",
+"class": "Die",
 "language": "GDScript",
-"path": "res://Scripts/BlueDie.gd"
+"path": "res://Scripts/Die.gd"
 }, {
 "base": "KinematicBody2D",
 "class": "Player",
@@ -20,14 +20,20 @@ _global_script_classes=[ {
 "path": "res://Scripts/Player.gd"
 }, {
 "base": "Reference",
-"class": "RedDie",
+"class": "PlayerStats",
 "language": "GDScript",
-"path": "res://Scripts/RedDie.gd"
+"path": "res://Scripts/PlayerStats.gd"
+}, {
+"base": "Node2D",
+"class": "Weapon",
+"language": "GDScript",
+"path": "res://Scripts/Weapon.gd"
 } ]
 _global_script_class_icons={
-"BlueDie": "",
+"Die": "",
 "Player": "",
-"RedDie": ""
+"PlayerStats": "",
+"Weapon": ""
 }
 
 [application]
