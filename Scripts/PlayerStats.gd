@@ -10,8 +10,9 @@ var jumpHeight :float;
 var handledWeapon: PackedScene = null; # null = no weapon
 
 
-func _init(moveSpeed:float, maxSpeed:float, jumpHeight:float, handledWeapon: PackedScene):
-	self.moveSpeed = moveSpeed;
+
+func _init(timeToMaxSpeed:float, maxSpeed:float, jumpHeight:float, handledWeapon: PackedScene):
+	self.moveSpeed = maxSpeed / timeToMaxSpeed;
 	self.maxSpeed = maxSpeed;
 	self.jumpHeight = jumpHeight;
 	self.handledWeapon = handledWeapon;

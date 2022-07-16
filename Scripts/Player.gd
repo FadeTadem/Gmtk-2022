@@ -8,7 +8,7 @@ var coyoteTimeTimer :Timer;
 
 var dice: Array = [
 	Die.new([ # The blue die
-		PlayerStats.new(100, 300, 32 * 4, null),
+		PlayerStats.new(5, 800, 32 * 4, null),
 		PlayerStats.new(100, 300, 100, null),
 		PlayerStats.new(100, 300, 100, null),
 		PlayerStats.new(100, 300, 100, null),
@@ -43,9 +43,9 @@ func _physics_process(delta):
 		_switchDie();
 	
 	if Input.is_action_pressed("move_right"):
-		vel.x = min(vel.x + stats.moveSpeed, stats.maxSpeed)
+		vel.x = min(vel.x + stats.moveSpeed * delta, stats.maxSpeed)
 	elif Input.is_action_pressed("move_left"):
-		vel.x = max(vel.x - stats.moveSpeed, -stats.maxSpeed)
+		vel.x = max(vel.x - stats.moveSpeed * delta, -stats.maxSpeed)
 	else:
 		vel.x = 0;
 	
