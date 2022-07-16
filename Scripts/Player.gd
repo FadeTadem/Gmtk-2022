@@ -2,16 +2,13 @@ extends KinematicBody2D
 class_name Player
 
 
-onready var coyote_time
-onready var jumpPressed
-var is_jumping = false
-var jumpAvailability: bool
-var jumpWasPressed: bool
 var gravity :float = 10;
+var coyoteTimeTimer :Timer;
+
 
 var dice: Array = [
 	Die.new([ # The blue die
-		PlayerStats.new(100, 300, 100, null),
+		PlayerStats.new(100, 300, 400, null),
 		PlayerStats.new(100, 300, 100, null),
 		PlayerStats.new(100, 300, 100, null),
 		PlayerStats.new(100, 300, 100, null),
@@ -31,64 +28,42 @@ var dice: Array = [
 export(int, 0, 1) var currentDie: int = 0;
 var stats :PlayerStats = dice[0].rollTable[0];
 
-var vel:Vector2 = Vector2.ZERO;
+var vel: Vector2 = Vector2.ZERO;
+var jump_count :int = 0;
 
 
 func _ready():
-	coyote_time = Timer.new()
-	coyote_time.one_shot = true
-	coyote_time.wait_time = 0.1
-	get_tree().root.get_children()[0].call_deferred("add_child", coyote_time)
-	coyote_time.call_deferred("connect","timeout", self, "_on_CoyoteTimer_timeout")
+	coyoteTimeTimer = Timer.new();
+	coyoteTimeTimer.one_shot = true;
+	coyoteTimeTimer.autostart = false;
+	get_tree().root.get_children()[0].call_deferred("add_child", coyoteTimeTimer);
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	if Input.is_action_just_pressed("switch_die"):
 		_switchDie();
 	
-	if is_on_floor():
-		vel.y = 0
-	var dir: Vector2 = _getInputDirection();
-	vel = _getVelocity(vel, dir);
-	
-	vel = move_and_slide_with_snap(vel, Vector2.ONE, Vector2.UP);
-
-
-func _getInputDirection() -> Vector2:
-	var dir: Vector2 = Vector2.ZERO
-	
-	dir.x = Input.get_action_strength("move_right") - Input.get_action_strength("move_left");
-	if is_on_floor():
-		jumpAvailability = true
-	elif jumpAvailability == true && coyote_time.is_stopped():
-		coyote_time.start(1)
-		
-		
-	
-	
-	if Input.is_action_just_pressed("jump"):
-		if jumpAvailability == true or $RayCast2D.is_colliding():
-			dir.y = 1
-		else:
-			dir.y = 0
-			
-	return dir;
-
-
-func _getVelocity(oldVel:Vector2, dir:Vector2) -> Vector2:
-	var newVel := oldVel;
-	
-	newVel.x += dir.x * stats.moveSpeed; 
-	newVel.x = clamp(newVel.x, -stats.maxSpeed, stats.maxSpeed);
-	
-	if dir.y == 1: 
-		if !coyote_time.is_stopped() && jumpAvailability:
-			newVel.y = 0;
-		else:
-			newVel.y = -stats.jumpHeight;
+	if Input.is_action_pressed("move_right"):
+		vel.x = min(vel.x + stats.moveSpeed, stats.maxSpeed)
+	elif Input.is_action_pressed("move_left"):
+		vel.x = max(vel.x - stats.moveSpeed, -stats.maxSpeed)
 	else:
-		newVel.y += gravity;
+		vel.x = 0;
 	
-	return newVel;
+	if coyoteTimeTimer.is_stopped():
+		vel.y += gravity;
+	
+	if is_on_floor() || !coyoteTimeTimer.is_stopped() || $BunnyHopRay.is_colliding():
+		jump_count = 0;
+		if Input.is_action_just_pressed("jump") && jump_count == 0 :
+			jump_count += 1;
+			vel.y = -stats.jumpHeight;
+			coyoteTimeTimer.stop();
+
+	var was_on_floor = is_on_floor();
+	vel = move_and_slide(vel, Vector2.UP);
+	if not is_on_floor() and was_on_floor and jump_count == 0:
+		coyoteTimeTimer.start(0.2);
+		vel.y = 0;
 
 
 func _swtichFace() -> void:
@@ -115,10 +90,3 @@ func _switchDie() -> void :
 	
 	_swtichFace();
 	_switchWeapon();
-
-
-func _on_CoyoteTimer_timeout():
-	print("timeout")
-	jumpAvailability = false
-	pass # Replace with function body.
-	
