@@ -19,7 +19,7 @@ func _physics_process(delta):
 	if Player.position.y > self.position.y:
 		moveOnY =  enemySpeed;
 	else:
-		moveOnY = -enemySpeed;
+		moveOnY = -1.0 * enemySpeed;
 	move_and_slide(Vector2(moveOnX, moveOnY));
 	pass
 func lowerHp(damage):
