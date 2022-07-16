@@ -20,6 +20,6 @@
  1 = lance
  2 = sabie
  3 = cutit
- 4 = arc mic
+ 4 = shuriken
  5 = arc mare
  6 = arbaleta
